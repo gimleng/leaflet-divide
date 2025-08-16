@@ -10,7 +10,7 @@
         "prepublishOnly": "npm run test && npm run clean && npm run build",
         "lint": "eslint src/leaflet-divide.js",
         "start": "webpack serve --open --mode=development",
-        "test": "jest __tests__/ --verbose"
+        "test": "jest --passWithNoTests"
     },
     "keywords": [
         "leaflet"
