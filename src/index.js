@@ -1,3 +1,3 @@
 import "./layout.css";
 import "./range.css";
-import "./leaflet-compare";
+import "./leaflet-divide";

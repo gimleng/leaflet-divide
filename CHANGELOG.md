@@ -1,8 +1,11 @@
 # Change Log
 
-All notable changes to this project will be documented in this file.
-This project adheres to [Semantic Versioning](http://semver.org/).
+## [leaflet-divide] - 2025-08-16
 
+### Fixed
+
+- forked from phloose/leaflet-compare
+- update leaflet-compare.js to compatible with leaflet 1.8-1.9 and change name to leaflet-divide.js
 
 ## [leaflet-compare 1.0.1] - 2021-02-01
 

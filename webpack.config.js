@@ -3,10 +3,9 @@ const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const { version } = require("./package.json");
 
 module.exports = {
-    // embeddable jupyter-leaflet bundle
     entry: "./src/index.js",
     output: {
-        filename: "leaflet-compare.js",
+        filename: "leaflet-divide.js",
         path: path.resolve(__dirname, "dist"),
         publicPath: "/dist/",
     },
@@ -41,7 +40,7 @@ module.exports = {
     },
     plugins: [
         new MiniCssExtractPlugin({
-            filename: "leaflet-compare.css",
+            filename: "leaflet-divide.css",
         }),
     ],
 };
