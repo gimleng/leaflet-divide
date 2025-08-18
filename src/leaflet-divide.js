@@ -202,7 +202,6 @@ L.Control.Divide = L.Control.extend({
   },
 });
 
-// Factory method
 L.control.divide = function (leftLayers, rightLayers, options) {
   return new L.Control.Divide(leftLayers, rightLayers, options);
 };

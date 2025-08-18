@@ -13,7 +13,7 @@ A Leaflet control to compare layers in each side. This plugin was modified to wo
 
 ### Installation
 
-`leaflet-compare` is compatible with Leaflet >=1.8.0 to 1.9.x versions.
+`leaflet-divide` is compatible with Leaflet >=1.8.0 to 1.9.x versions.
 
 To install it you can use npm:
 
