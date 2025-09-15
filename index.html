@@ -69,8 +69,10 @@
       }).addTo(map);
 
       const compare = L.control
-        .divide([leftCircle, googleSat], [rightCircle, osmLayer])
+        .divide([leftCircle, googleSat], [osmLayer])
         .addTo(map);
+
+      compare.setRightLayers([rightCircle, osmLayer]);
     </script>
   </body>
 </html>

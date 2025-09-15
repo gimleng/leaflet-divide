@@ -130,6 +130,18 @@ L.Control.Divide = L.Control.extend({
     return this;
   },
 
+  setLeftLayers(leftLayers) {
+    this._leftLayers = asArray(leftLayers);
+    this._updateLayers();
+    return this;
+  },
+
+  setRightLayers(rightLayers) {
+    this._rightLayers = asArray(rightLayers);
+    this._updateLayers();
+    return this;
+  },
+
   _updateClip() {
     if (!this._map) return this;
 
