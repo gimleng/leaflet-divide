@@ -1,6 +1,6 @@
 {
     "name": "leaflet-divide",
-    "version": "1.0.4",
+    "version": "1.0.5",
     "description": "forked from leaflet-compare, patched it to work with leaflet 1.8-1.9",
     "main": "dist/leaflet-divide.js",
     "style": "dist/leaflet-divide.css",
