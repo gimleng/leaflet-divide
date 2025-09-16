@@ -158,33 +158,15 @@ L.Control.Divide = L.Control.extend({
     const clipRight = `rect(${[nw.y, se.x, se.y, clipX].join("px,")}px)`;
 
     this._leftLayers.forEach((layer) => {
-      if (layer instanceof L.TileLayer) {
-        // For TileLayers use the internal container
-        const el =
-          layer._container || layer.getContainer?.() || layer.getPane?.();
-        if (el) {
-          el.style.clip = clipLeft;
-          // Force a small redraw to respect the new clip
-          layer.redraw && layer.redraw();
-        }
-      } else {
-        const el = layer.getContainer?.() || layer.getPane?.();
-        if (el) el.style.clip = clipLeft;
-      }
+      if (!this._map.hasLayer(layer)) return;
+      const el = layer.getContainer?.() || layer.getPane?.();
+      if (el) el.style.clip = clipLeft;
     });
 
     this._rightLayers.forEach((layer) => {
-      if (layer instanceof L.TileLayer) {
-        const el =
-          layer._container || layer.getContainer?.() || layer.getPane?.();
-        if (el) {
-          el.style.clip = clipRight;
-          layer.redraw && layer.redraw();
-        }
-      } else {
-        const el = layer.getContainer?.() || layer.getPane?.();
-        if (el) el.style.clip = clipRight;
-      }
+      if (!this._map.hasLayer(layer)) return;
+      const el = layer.getContainer?.() || layer.getPane?.();
+      if (el) el.style.clip = clipRight;
     });
 
     return this;
