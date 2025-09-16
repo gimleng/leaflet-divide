@@ -144,7 +144,6 @@ L.Control.Divide = L.Control.extend({
 
   _updateClip() {
     if (!this._map) return this;
-
     const map = this._map;
     const nw = map.containerPointToLayerPoint([0, 0]);
     const se = map.containerPointToLayerPoint(map.getSize());
@@ -152,21 +151,17 @@ L.Control.Divide = L.Control.extend({
     const dividerX = this.getPosition();
 
     this._divider.style.left = `${dividerX}px`;
-    this.fire("dividermove", { x: dividerX });
 
     const clipLeft = `rect(${[nw.y, clipX, se.y, nw.x].join("px,")}px)`;
     const clipRight = `rect(${[nw.y, se.x, se.y, clipX].join("px,")}px)`;
 
-    this._leftLayers.forEach((layer) => {
-      const el = layer.getContainer?.() || layer.getPane?.();
-      if (el) el.style.clip = clipLeft;
-    });
+    const applyClip = (layer, clip) => {
+      const el = layer.getPane?.() || layer._container;
+      if (el) el.style.clip = clip;
+    };
 
-    this._rightLayers.forEach((layer) => {
-      const el = layer.getContainer?.() || layer.getPane?.();
-      if (el) el.style.clip = clipRight;
-    });
-
+    this._leftLayers.forEach((l) => applyClip(l, clipLeft));
+    this._rightLayers.forEach((l) => applyClip(l, clipRight));
     return this;
   },
 
