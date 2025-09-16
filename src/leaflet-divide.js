@@ -144,6 +144,7 @@ L.Control.Divide = L.Control.extend({
 
   _updateClip() {
     if (!this._map) return this;
+
     const map = this._map;
     const nw = map.containerPointToLayerPoint([0, 0]);
     const se = map.containerPointToLayerPoint(map.getSize());
@@ -151,21 +152,50 @@ L.Control.Divide = L.Control.extend({
     const dividerX = this.getPosition();
 
     this._divider.style.left = `${dividerX}px`;
+    this.fire("dividermove", { x: dividerX });
 
     const clipLeft = `rect(${[nw.y, clipX, se.y, nw.x].join("px,")}px)`;
     const clipRight = `rect(${[nw.y, se.x, se.y, clipX].join("px,")}px)`;
 
-    const applyClip = (layer, clip) => {
-      const el = layer.getPane?.() || layer._container;
-      if (el) el.style.clip = clip;
-    };
+    this._leftLayers.forEach((layer) => {
+      const el = layer.getContainer?.() || layer.getPane?.();
+      if (el) el.style.clip = clipLeft;
+    });
 
-    this._leftLayers.forEach((l) => applyClip(l, clipLeft));
-    this._rightLayers.forEach((l) => applyClip(l, clipRight));
+    this._rightLayers.forEach((layer) => {
+      const el = layer.getContainer?.() || layer.getPane?.();
+      if (el) el.style.clip = clipRight;
+    });
+
     return this;
   },
 
   _updateLayers() {
+    if (!this._map) {
+      return this;
+    }
+    var prevLeft = this._leftLayer;
+    var prevRight = this._rightLayer;
+    this._leftLayer = this._rightLayer = null;
+    this._leftLayers.forEach(function (layer) {
+      if (this._map.hasLayer(layer)) {
+        this._leftLayer = layer;
+      }
+    }, this);
+    this._rightLayers.forEach(function (layer) {
+      if (this._map.hasLayer(layer)) {
+        this._rightLayer = layer;
+      }
+    }, this);
+    if (prevLeft !== this._leftLayer) {
+      prevLeft && this.fire("leftlayerremove", { layer: prevLeft });
+      this._leftLayer && this.fire("leftlayeradd", { layer: this._leftLayer });
+    }
+    if (prevRight !== this._rightLayer) {
+      prevRight && this.fire("rightlayerremove", { layer: prevRight });
+      this._rightLayer &&
+        this.fire("rightlayeradd", { layer: this._rightLayer });
+    }
     this._updateClip();
   },
 
