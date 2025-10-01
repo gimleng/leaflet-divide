@@ -46,8 +46,6 @@ L.Control.Divide = L.Control.extend({
   options: {
     thumbSize: 42,
     padding: 0,
-    paddingDivideLeft: 0,
-    paddingDivideRight: 0,
     position: 0.5,
   },
 
@@ -99,8 +97,8 @@ L.Control.Divide = L.Control.extend({
     this._range.max = 1;
     this._range.step = "any";
     this._range.value = 0.5;
-    this._range.style.paddingLeft = `${this.options.paddingDivideLeft}px`;
-    this._range.style.paddingRight = `${this.options.paddingDivideRight}px`;
+    this._range.style.paddingLeft =
+      this._range.style.paddingRight = `${this.options.padding}px`;
 
     this._addEvents();
     this._updateClip();
