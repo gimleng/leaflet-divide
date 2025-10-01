@@ -151,7 +151,7 @@ L.Control.Divide = L.Control.extend({
     const nw = map.containerPointToLayerPoint([0, 0]);
     const se = map.containerPointToLayerPoint(map.getSize());
     const clipX = nw.x + this.getPosition();
-    const dividerX = this.getPosition();
+    let dividerX = this.getPosition();
 
     if (this.options.minLeftPx && dividerX < this.options.minLeftPx) {
       dividerX = this.options.minLeftPx;
