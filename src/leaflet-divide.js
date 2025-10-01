@@ -152,10 +152,10 @@ L.Control.Divide = L.Control.extend({
     const nw = map.containerPointToLayerPoint([0, 0]);
     const se = map.containerPointToLayerPoint(map.getSize());
 
-    // Raw position from range
+    // Get raw divider position in pixels
     let dividerX = this.getPosition();
 
-    // Clamp divider position
+    // Clamp with minLeftPx / minRightPx
     if (this.options.minLeftPx && dividerX < this.options.minLeftPx) {
       dividerX = this.options.minLeftPx;
     }
@@ -166,18 +166,20 @@ L.Control.Divide = L.Control.extend({
       dividerX = mapWidth - this.options.minRightPx;
     }
 
-    // 🔑 Force the range thumb to reflect the clamped divider
-    const rangeValue = dividerX / mapWidth; // convert back to [0..1]
-    this._range.value = rangeValue.toString();
+    // 🔑 Convert dividerX back to range.value using the same formula as getPosition()
+    // getPosition(): pos = mapWidth * value + (0.5 - value) * (2*padding + thumbSize)
+    const offset = 2 * this.options.padding + this.options.thumbSize;
+    const rangeValue = (dividerX - 0.5 * offset) / (mapWidth - offset);
 
-    const clipX = nw.x + dividerX;
+    // Clamp to [0,1] to be safe
+    this._range.value = Math.min(1, Math.max(0, rangeValue)).toString();
 
-    // Update UI
+    // Apply divider line
     this._divider.style.left = `${dividerX}px`;
     this.fire("dividermove", { x: dividerX });
 
-    const clipLeft = `rect(${[nw.y, clipX, se.y, nw.x].join("px,")}px)`;
-    const clipRight = `rect(${[nw.y, se.x, se.y, clipX].join("px,")}px)`;
+    const clipLeft = `rect(${[nw.y, dividerX, se.y, nw.x].join("px,")}px)`;
+    const clipRight = `rect(${[nw.y, se.x, se.y, dividerX].join("px,")}px)`;
 
     this._leftLayers.forEach((layer) => {
       if (!this._map.hasLayer(layer)) return;
@@ -193,7 +195,6 @@ L.Control.Divide = L.Control.extend({
 
     return this;
   },
-
   _updateLayers() {
     if (!this._map) {
       return this;
