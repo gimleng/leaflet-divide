@@ -72,6 +72,9 @@
         .divide([leftCircle, googleSat], [osmLayer])
         .addTo(map);
 
+      compare.options.minLeftPx = 110;
+      compare.options.minRightPx = 10;
+
       compare.setRightLayers([rightCircle, osmLayer]);
     </script>
   </body>
