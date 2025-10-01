@@ -47,6 +47,8 @@ L.Control.Divide = L.Control.extend({
     thumbSize: 42,
     padding: 0,
     position: 0.5,
+    minLeftPx: 0,
+    minRightPx: 0,
   },
 
   initialize(leftLayers, rightLayers, options) {
@@ -150,6 +152,16 @@ L.Control.Divide = L.Control.extend({
     const se = map.containerPointToLayerPoint(map.getSize());
     const clipX = nw.x + this.getPosition();
     const dividerX = this.getPosition();
+
+    if (this.options.minLeftPx && dividerX < this.options.minLeftPx) {
+      dividerX = this.options.minLeftPx;
+    }
+    if (
+      this.options.minRightPx &&
+      dividerX > mapWidth - this.options.minRightPx
+    ) {
+      dividerX = mapWidth - this.options.minRightPx;
+    }
 
     this._divider.style.left = `${dividerX}px`;
     this.fire("dividermove", { x: dividerX });
