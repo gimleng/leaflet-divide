@@ -148,6 +148,7 @@ L.Control.Divide = L.Control.extend({
     if (!this._map) return this;
 
     const map = this._map;
+    const mapWidth = map.getSize().x;
     const nw = map.containerPointToLayerPoint([0, 0]);
     const se = map.containerPointToLayerPoint(map.getSize());
     const clipX = nw.x + this.getPosition();
