@@ -97,8 +97,8 @@ L.Control.Divide = L.Control.extend({
     this._range.max = 1;
     this._range.step = "any";
     this._range.value = 0.5;
-    this._range.style.paddingLeft =
-      this._range.style.paddingRight = `${this.options.padding}px`;
+    this._range.style.paddingLeft = `${this.options.padding.left}px`;
+    this._range.style.paddingRight = `${this.options.padding.right}px`;
 
     this._addEvents();
     this._updateClip();
