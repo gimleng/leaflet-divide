@@ -4,7 +4,6 @@ A Leaflet control to compare layers in each side. This plugin was modified to wo
 
 **This project is a fork of the fork ([leaflet-compare](https://github.com/phloose/leaflet-compare)) of the ([leaflet-splitmap](https://github.com/QuantStack/leaflet-splitmap)) of the [leaflet-side-by-side](https://github.com/digidem/leaflet-side-by-side) plugin**
 
-
 ### L.control.divide(_leftLayer[s]_, _rightLayer[s]_, options)
 
 ### Example
@@ -22,9 +21,17 @@ To install it you can use npm:
 Then import it in your project:
 
 `import "leaflet-divide"`
+`import "leaflet-divide/dist/leaflet-divide.css";`
 
-As an alternative you can import the `Divide` class directly:
+### Parameters
 
-`import { Divide } from "leaflet-divide"`
+Look original parameter from [phloose/leaflet-compare](https://github.com/phloose/leaflet-compare)
 
-Be sure to have included the Leaflet css and js files and the plugin's files `leaflet-divide.css` *before* you use the plugin. Otherwise the slider will not be shown.
+and this is parameters I added.
+
+| parameter | type | description |
+| ------------------- | -------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | |
+| `options.minLeftPx` | Number | Padding between slider and the left edge of the screen in pixels. Defaults to `0` |
+| `options.minRightPx` | Number | Padding between slider and the right edge of the screen in pixels. Defaults to `0` |
+
+Be sure to have included the Leaflet css and js files and the plugin's files `leaflet-divide.css` _before_ you use the plugin. Otherwise the slider will not be shown.
