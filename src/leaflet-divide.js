@@ -149,13 +149,12 @@ L.Control.Divide = L.Control.extend({
 
     const map = this._map;
     const mapWidth = map.getSize().x;
-    const nw = map.containerPointToLayerPoint([0, 0]);
-    const se = map.containerPointToLayerPoint(map.getSize());
+    const mapHeight = map.getSize().y;
 
-    // Get raw divider position in pixels
+    // Get divider position in screen pixels
     let dividerX = this.getPosition();
 
-    // Clamp dividerX with minLeftPx / minRightPx
+    // Clamp with minLeftPx / minRightPx
     if (this.options.minLeftPx && dividerX < this.options.minLeftPx) {
       dividerX = this.options.minLeftPx;
     }
@@ -166,21 +165,19 @@ L.Control.Divide = L.Control.extend({
       dividerX = mapWidth - this.options.minRightPx;
     }
 
-    // Convert dividerX back to range.value using getPosition() formula
-    const offset = 2 * this.options.padding + this.options.thumbSize;
-    const rangeValue = (dividerX - 0.5 * offset) / (mapWidth - offset);
-
-    // Clamp to [0, 1] and update the slider
-    this._range.value = Math.min(1, Math.max(0, rangeValue)).toString();
-
-    // Apply divider line position
+    // Update divider DOM position (screen pixels)
     this._divider.style.left = `${dividerX}px`;
     this.fire("dividermove", { x: dividerX });
 
-    // Update clipping rectangles for left and right layers
-    const clipLeft = `rect(${[nw.y, dividerX, se.y, nw.x].join("px,")}px)`;
-    const clipRight = `rect(${[nw.y, se.x, se.y, dividerX].join("px,")}px)`;
+    // 🔑 Convert dividerX (screen pixels) into layer coordinates
+    const nw = map.containerPointToLayerPoint([0, 0]);
+    const se = map.containerPointToLayerPoint([mapWidth, mapHeight]);
+    const clipPoint = map.containerPointToLayerPoint([dividerX, 0]);
 
+    const clipLeft = `rect(${[nw.y, clipPoint.x, se.y, nw.x].join("px,")}px)`;
+    const clipRight = `rect(${[nw.y, se.x, se.y, clipPoint.x].join("px,")}px)`;
+
+    // Apply to layers
     this._leftLayers.forEach((layer) => {
       if (!this._map.hasLayer(layer)) return;
       const el = layer.getContainer?.() || layer.getPane?.();
