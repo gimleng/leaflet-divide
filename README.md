@@ -29,9 +29,9 @@ Look original parameter from [phloose/leaflet-compare](https://github.com/phloos
 
 and this is parameters I added.
 
-| parameter | type | description |
-| ------------------- | -------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | |
-| `options.minLeftPx` | Number | Padding between slider and the left edge of the screen in pixels. Defaults to `0` |
+| parameter            | type   | description                                                                        |
+| -------------------- | ------ | ---------------------------------------------------------------------------------- |
+| `options.minLeftPx`  | Number | Padding between slider and the left edge of the screen in pixels. Defaults to `0`  |
 | `options.minRightPx` | Number | Padding between slider and the right edge of the screen in pixels. Defaults to `0` |
 
 Be sure to have included the Leaflet css and js files and the plugin's files `leaflet-divide.css` _before_ you use the plugin. Otherwise the slider will not be shown.
